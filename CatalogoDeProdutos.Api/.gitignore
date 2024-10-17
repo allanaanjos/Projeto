@@ -1,0 +1,35 @@
+# Ignore arquivos compilados
+bin/
+obj/
+
+# Ignore pacotes NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Ignore configurações locais de ambiente
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# Ignore logs
+*.log
+
+# Ignore arquivos de configuração temporários
+*.tmp
+*.temp
+*.cache
+
+# Ignore arquivos de backup
+*.bak
+*.swp
+
+# Ignore arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignore banco de dados SQLite local
+*.db
+*.sqlite
+*.sqlite3
