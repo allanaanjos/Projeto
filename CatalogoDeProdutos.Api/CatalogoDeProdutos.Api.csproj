@@ -9,6 +9,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogoDeProdutos.Core\CatalogoDeProdutos.Core.csproj" />

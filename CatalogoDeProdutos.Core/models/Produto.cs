@@ -14,6 +14,7 @@ namespace CatalogoDeProdutos.Core.models
             Preco = preco;
             Descricao = descricao;
             Quantidade = quantidade;
+            Tipo = tipo;
             DataDeCadastro = DateTime.Now;
         }
 
@@ -22,7 +23,7 @@ namespace CatalogoDeProdutos.Core.models
         public double Preco { get; set; }
         public string? Descricao { get; set; } = null;
         public int Quantidade { get; set; }
-        public Tipo Tipo { get; set; }
+        public Tipo Tipo { get; set; } 
         public DateTime DataDeCadastro { get; set; } 
 
         private void Validacao(string nome, double preco,
@@ -59,8 +60,6 @@ namespace CatalogoDeProdutos.Core.models
             this.Descricao = descricao;
             this.Quantidade = quantidade;
             this.Tipo = tipo;
-            this.DataDeCadastro = DateTime.Now;
-
             return this;
         }
 

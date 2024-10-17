@@ -23,7 +23,7 @@ public class ProdutoHandler : IProdutoHandler
                 request.Preco,
                 request.Descricao,
                 request.Quantidade,
-                request.Tipo
+                tipo: request.Tipo
             );
 
             await _repository.AddAsync(novoProduto);
@@ -124,11 +124,11 @@ public class ProdutoHandler : IProdutoHandler
     {
         try
         {
-            var produtoExistente = await _repository.GetByIdAsync(request.Id);
+            var produtoExistente = await _repository.GetByIdAsync(request.ProdutoId);
 
             if (produtoExistente == null)
                 return new Response<Produto>
-                ($"Produto com ID {request.Id} não encontrado.", 
+                ($"Produto com ID {request.ProdutoId} não encontrado.", 
                 StatusCodes.Status404NotFound);
 
             produtoExistente.Update(

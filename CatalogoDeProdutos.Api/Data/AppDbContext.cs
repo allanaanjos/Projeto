@@ -33,7 +33,8 @@ namespace CatalogoDeProdutos.Api.Data
 
             modelBuilder.Entity<Produto>()
                 .Property(x => x.Tipo)
-                .IsRequired();
+                .IsRequired()
+                .HasConversion<int>();
 
             modelBuilder.Entity<Produto>()
                .Property(x => x.DataDeCadastro)

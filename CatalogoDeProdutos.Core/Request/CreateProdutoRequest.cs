@@ -19,6 +19,6 @@ namespace CatalogoDeProdutos.Core.Request
         public int Quantidade { get; set; }
 
         [Required(ErrorMessage = "O tipo é obrigatório.")]
-        public Tipo Tipo { get; set; }
+        public Tipo Tipo { get; set; } 
     }
 }
