@@ -1,11 +1,11 @@
 using System.Net.Http.Json;
+using CatalogoDeProdutos.Blazor.Response;
 using CatalogoDeProdutos.Core.Handler;
 using CatalogoDeProdutos.Core.models;
 using CatalogoDeProdutos.Core.Request;
 using CatalogoDeProdutos.Core.Response;
 
-
-namespace CatalogoDeProdutos.Web.Handler
+namespace CatalogoDeProdutos.Blazor.Handler
 {
     public class ProdutoHandler : IProdutoHandler
     {
@@ -72,7 +72,7 @@ namespace CatalogoDeProdutos.Web.Handler
         public async Task<Response<Produto?>> GetProdutoById(GetProdutoByIdRequest request)
         {
             var produto = await http.GetFromJsonAsync<Produto>
-            ($"http://localhost:5064/v1/produtos/{request.id}");
+            ($"http://localhost:5064/v1/produtos/{request.Id}");
 
             if (produto != null)
             {
@@ -95,81 +95,86 @@ namespace CatalogoDeProdutos.Web.Handler
         }
 
 
-        public async Task<List<Response<Produto>>?> GetProdutos(PagedRequest request)
+        public async Task<Response<List<Produto>>?> GetProdutos(PagedRequest request)
         {
-            string url =
-            $"http://localhost:5064/v1/produtos?page={request.PageNumber}&pageSize={request.PageSize}";
-
             try
             {
-                var produtos = await http.
-                GetFromJsonAsync<List<Produto>>(url);
+                string url =
+                $"http://localhost:5064/v1/produtos?page={request.PageNumber}&pageSize={request.PageSize}";
 
-                var responseList = new List<Response<Produto>>();
+                var response = await http.GetFromJsonAsync<ProdutoResponse>(url);
 
-                if (produtos != null && produtos.Any())
+                if (response == null || !response.Success || response.Data == null || !response.Data.Any())
                 {
-                    responseList = produtos.Select(produto => new Response<Produto>
+                    return new Response<List<Produto>>
                     {
-                        Data = produto,
-                        Success = true,
-                        Message = "Produto obtido com sucesso."
-                    }).ToList();
-                }
-                else
-                {
-                    responseList.Add(new Response<Produto>
-                    {
-                        Data = null,
                         Success = false,
-                        Message = "Nenhum produto encontrado."
-                    });
+                        Message = response?.Message ?? "Nenhum produto cadastrado.",
+                    };
                 }
 
-                return responseList;
-            }
-            catch (HttpRequestException ex)
-            {
-                return new List<Response<Produto>>
+                return new Response<List<Produto>>
                 {
-                    new Response<Produto>
-                   {
-                     Data = null,
-                     Success = false,
-                     Message = $"Erro ao buscar os produtos: {ex.Message}"
-                   }
+                    Success = true,
+                    Data = response.Data,
+                    Message = "Produtos obtidos com sucesso.",
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<List<Produto>>
+                {
+                    Success = false,
+                    Message = $"Erro ao buscar os produtos: {ex.Message}",
                 };
             }
         }
-
 
         public async Task<Response<Produto>> UpdateProduto(UpdateProdutoRequest request)
         {
-            var response = await http
-            .PutAsJsonAsync($"http://localhost:5064/v1/produtos/{request.id}", request);
+            string url = $"http://localhost:5064/v1/produtos/{request.ProdutoId}";
+            var response = new Response<Produto>();
 
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var produtoAtualizado = await response
-                .Content
-                .ReadFromJsonAsync<Produto>();
+                var responseHttp = await http.PutAsJsonAsync(url, request);
 
-                return new Response<Produto>
+                if (responseHttp.IsSuccessStatusCode)
                 {
-                    Data = produtoAtualizado,
-                    Success = true,
-                    Message = "Produto atualizado com sucesso."
-                };
+                    var produtoAtualizado = await responseHttp.Content.ReadFromJsonAsync<Produto>();
+
+                    if (produtoAtualizado != null)
+                    {
+                        response.Data = produtoAtualizado;
+                        response.Success = true;
+                        response.Message = "Produto atualizado com sucesso.";
+                    }
+                    else
+                    {
+                        response.Data = null;
+                        response.Success = false;
+                        response.Message = "Falha ao atualizar o produto: dados retornados nulos.";
+                    }
+                }
+                else
+                {
+                    var errorContent = await responseHttp.Content.ReadAsStringAsync();
+                    response.Data = null;
+                    response.Success = false;
+                    response.Message = $"Falha ao atualizar o produto: {errorContent}";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return new Response<Produto>
-                {
-                    Data = null,
-                    Success = false,
-                    Message = "Erro ao atualizar o produto."
-                };
+                response.Data = null;
+                response.Success = false;
+                response.Message = $"Erro ao tentar atualizar o produto: {ex.Message}";
             }
+
+            return response;
         }
+
+
+
     }
 }

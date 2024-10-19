@@ -136,11 +136,12 @@ namespace CatalogoDeProdutos.Api.Repository
                     throw new KeyNotFoundException
                     ($"Produto com ID {entity.Id} não encontrado.");
 
-                produtoExistente.Update
+                var produtoAtualizado = produtoExistente.Update
                            (entity.Nome, entity.Preco,
                              entity.Descricao, entity.Quantidade,
                              entity.Tipo);
 
+                _context.Produtos.Update(produtoAtualizado);
                 await _context.SaveChangesAsync();
 
                 return produtoExistente;

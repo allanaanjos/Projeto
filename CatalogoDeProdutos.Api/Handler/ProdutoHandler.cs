@@ -89,36 +89,37 @@ public class ProdutoHandler : IProdutoHandler
         }
     }
 
-    public async Task<List<Response<Produto>>?> GetProdutos(PagedRequest request)
+    public async Task<Response<List<Produto>>?> GetProdutos(PagedRequest request)
     {
         try
         {
             var produtos = await _repository.GetAllAsync();
 
             if (produtos == null || !produtos.Any())
-                return new List<Response<Produto>>
             {
-                new Response<Produto>("Nenhum produto cadastrado.", 
-                StatusCodes.Status404NotFound)
-            };
+                return new Response<List<Produto>>(
+                    data: null,
+                    message: "Nenhum produto cadastrado.",
+                    statusCode: StatusCodes.Status404NotFound
+                );
+            }
 
-            var responseList = produtos
-                .Select(produto => new Response<Produto>
-                (produto, statusCode: StatusCodes.Status200OK))
-                .ToList();
-
-            return responseList;
+            return new Response<List<Produto>>(
+                data: produtos.ToList(),
+                message: "Produtos obtidos com sucesso.",
+                statusCode: StatusCodes.Status200OK
+            );
         }
         catch (Exception ex)
         {
-            return new List<Response<Produto>>
-            {
-               new Response<Produto>
-               ($"Erro ao buscar os produtos: {ex.Message}",
-                StatusCodes.Status500InternalServerError)
-            };
+            return new Response<List<Produto>>(
+                data: null,
+                message: $"Erro ao buscar os produtos: {ex.Message}",
+                statusCode: StatusCodes.Status500InternalServerError
+            );
         }
     }
+
 
     public async Task<Response<Produto>> UpdateProduto(UpdateProdutoRequest request)
     {
@@ -128,7 +129,7 @@ public class ProdutoHandler : IProdutoHandler
 
             if (produtoExistente == null)
                 return new Response<Produto>
-                ($"Produto com ID {request.ProdutoId} não encontrado.", 
+                ($"Produto com ID {request.ProdutoId} não encontrado.",
                 StatusCodes.Status404NotFound);
 
             produtoExistente.Update(
@@ -141,15 +142,15 @@ public class ProdutoHandler : IProdutoHandler
 
             await _repository.UpdateAsync(produtoExistente);
 
-            return new Response<Produto>(produtoExistente, 
-            "Produto atualizado com sucesso!", 
+            return new Response<Produto>(produtoExistente,
+            "Produto atualizado com sucesso!",
             StatusCodes.Status200OK);
         }
         catch (Exception ex)
         {
-           return new Response<Produto>
-           ($"Erro ao atualizar o produto, {ex.Message}",
-            StatusCodes.Status500InternalServerError);
+            return new Response<Produto>
+            ($"Erro ao atualizar o produto, {ex.Message}",
+             StatusCodes.Status500InternalServerError);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using CatalogoDeProdutos.Api.Data;
 using CatalogoDeProdutos.Api.Repository;
 using CatalogoDeProdutos.Core.Handler;
@@ -7,7 +6,6 @@ using CatalogoDeProdutos.Core.Repository;
 using CatalogoDeProdutos.Core.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +14,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddTransient<IProdutoHandler, ProdutoHandler>();
 builder.Services.AddTransient<IRepository<Produto>, Repository>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorApp", builder =>
+    {
+        builder.WithOrigins("http://localhost:5165") 
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 
 
 var app = builder.Build();
@@ -119,6 +128,6 @@ app.MapDelete("/v1/produtos/{id}", async
 
 
 
-
+app.UseCors("AllowBlazorApp");
 
 app.Run();

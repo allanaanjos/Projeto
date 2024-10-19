@@ -1,0 +1,81 @@
+@page "/Produtos"
+@using CatalogoDeProdutos.Core.models
+@inject IProdutoHandler produtoHandler
+
+<h1>PRODUTOS</h1>
+
+@if (produtos == null)
+{
+    <p>Carregando produtos...</p>
+}
+else if (!produtos.Any())
+{
+    <p>Nenhum produto encontrado.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOME</th>
+                <th>PREÇO</th>
+                <th>DESCRIÇÃO</th>
+                <th>QUANTIDADE</th>
+                <th>TIPO</th>
+                <th>AÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produto in produtos)
+            {
+                <tr>
+                    <td>@produto.Id</td>
+                    <td>@produto.Nome</td>
+                    <td>@produto.Preco.ToString("C")</td>
+                    <td>@produto.Descricao</td>
+                    <td>@produto.Quantidade</td>
+                    <td>@produto.Tipo</td>
+                    <td>
+                        <div class="d-flex">
+                            <button class="btn btn-link text-primary" @onclick=@(() => EditarProduto(produto.Id))
+                                title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-link text-danger" @onclick=@(() => ExcluirProduto(produto.Id))
+                                title="Excluir">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public List<Produto> produtos { get; set; } = new List<Produto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await 
+        produtoHandler.
+        GetProdutos(new PagedRequest { PageNumber = 1, PageSize = 10 });
+
+        produtos = response != null && response.Success && response.Data != null
+        ? response.Data
+        : new List<Produto>();
+    }
+
+    private void EditarProduto(long id) 
+    => Navigation.NavigateTo($"/produtos/edit/{id}");
+
+    private async Task ExcluirProduto(long produtoId)
+    {
+        var request = new DeleteProdutoRequest { id = produtoId };
+        var response = await produtoHandler.DeleteProduto(request);
+        produtos.RemoveAll(p => p.Id == produtoId);
+        Console.WriteLine(response.Message);
+    }
+}

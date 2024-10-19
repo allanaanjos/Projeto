@@ -1,0 +1,70 @@
+@page "/produto/criar"
+@inject IProdutoHandler produtoHandler
+@inject ISnackbar Snackbar
+
+<h1>Criar Produto</h1>
+
+<EditForm Model="novoProduto" OnValidSubmit="AdicionarProduto">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <InputText id="nome" class="form-control" @bind-Value="novoProduto.Nome" />
+        <ValidationMessage For="@(() => novoProduto.Nome)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="preco" class="form-label">Preço</label>
+        <InputNumber id="preco" class="form-control" @bind-Value="novoProduto.Preco" />
+        <ValidationMessage For="@(() => novoProduto.Preco)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <InputTextArea id="descricao" class="form-control" @bind-Value="novoProduto.Descricao" />
+        <ValidationMessage For="@(() => novoProduto.Descricao)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="quantidade" class="form-label">Quantidade</label>
+        <InputNumber id="quantidade" class="form-control" @bind-Value="novoProduto.Quantidade" />
+        <ValidationMessage For="@(() => novoProduto.Quantidade)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <InputSelect id="tipo" class="form-control" @bind-Value="novoProduto.Tipo">
+            @foreach (var tipo in Enum.GetValues
+            (typeof(CatalogoDeProdutos.Core.models.Enum.Tipo))
+            .Cast<CatalogoDeProdutos.Core.models.Enum.Tipo>())
+            {
+                <option value="@tipo">@tipo</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => novoProduto.Tipo)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Adicionar Produto</button>
+    <button type="button" class="btn btn-secondary" @onclick="Voltar">Voltar</button>
+</EditForm>
+
+@code {
+    private CreateProdutoRequest novoProduto { get; set; } = new CreateProdutoRequest();
+
+    private string errorMessage { get; set; } = string.Empty;
+
+    private async Task AdicionarProduto()
+    {
+         Console.WriteLine(novoProduto);
+
+        var response = await produtoHandler.CreateProduto(novoProduto);
+
+        Snackbar.Add("Produto criado com sucesso!", Severity.Success);
+    }
+
+    private void Voltar()
+    {
+        Navigation.NavigateTo("/produtos");
+    }
+}

@@ -55,11 +55,11 @@ namespace CatalogoDeProdutos.Core.models
          string? descricao, int quantidade, Tipo tipo)
         {
             Validacao(nome, preco, descricao, quantidade, tipo)  ;
-            this.Nome = nome;
-            this.Preco = preco;
-            this.Descricao = descricao;
-            this.Quantidade = quantidade;
-            this.Tipo = tipo;
+            Nome = nome;
+            Preco = preco;
+            Descricao = descricao;
+            Quantidade = quantidade;
+            Tipo = tipo;
             return this;
         }
 
