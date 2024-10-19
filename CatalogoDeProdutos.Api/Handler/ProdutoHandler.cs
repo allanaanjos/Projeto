@@ -105,7 +105,9 @@ public class ProdutoHandler : IProdutoHandler
             }
 
             return new Response<List<Produto>>(
-                data: produtos.ToList(),
+                data:produtos.Skip((request.PageNumber - 1) * request.PageSize)
+                  .Take(request.PageSize)
+                  .ToList(),
                 message: "Produtos obtidos com sucesso.",
                 statusCode: StatusCodes.Status200OK
             );

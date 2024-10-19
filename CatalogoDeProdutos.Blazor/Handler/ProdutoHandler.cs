@@ -21,26 +21,11 @@ namespace CatalogoDeProdutos.Blazor.Handler
             var response = await http.PostAsJsonAsync
             ("http://localhost:5064/v1/produtos/criar", request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var produto = await response.Content.ReadFromJsonAsync<Produto>();
-                return new Response<Produto>
-                {
-                    Data = produto,
-                    Success = true,
-                    Message = "Produto criado com sucesso."
-                };
-            }
-            else
-            {
-                return new Response<Produto>
-                {
-                    Data = null,
-                    Success = false,
-                    Message = "Erro ao criar o produto."
-                };
-            }
+            return await response.Content.ReadFromJsonAsync<Response<Produto>>()
+            ?? new Response<Produto>(null!, "Produto não Cadastrado", 400);
+
         }
+        
 
 
         public async Task<Response<Produto>> DeleteProduto(DeleteProdutoRequest request)
@@ -132,48 +117,12 @@ namespace CatalogoDeProdutos.Blazor.Handler
 
         public async Task<Response<Produto>> UpdateProduto(UpdateProdutoRequest request)
         {
-            string url = $"http://localhost:5064/v1/produtos/{request.ProdutoId}";
-            var response = new Response<Produto>();
+            var result = await http.PutAsJsonAsync
+            ($"http://localhost:5064/v1/produtos/{request.ProdutoId}", request);
 
-            try
-            {
-                var responseHttp = await http.PutAsJsonAsync(url, request);
-
-                if (responseHttp.IsSuccessStatusCode)
-                {
-                    var produtoAtualizado = await responseHttp.Content.ReadFromJsonAsync<Produto>();
-
-                    if (produtoAtualizado != null)
-                    {
-                        response.Data = produtoAtualizado;
-                        response.Success = true;
-                        response.Message = "Produto atualizado com sucesso.";
-                    }
-                    else
-                    {
-                        response.Data = null;
-                        response.Success = false;
-                        response.Message = "Falha ao atualizar o produto: dados retornados nulos.";
-                    }
-                }
-                else
-                {
-                    var errorContent = await responseHttp.Content.ReadAsStringAsync();
-                    response.Data = null;
-                    response.Success = false;
-                    response.Message = $"Falha ao atualizar o produto: {errorContent}";
-                }
-            }
-            catch (Exception ex)
-            {
-                response.Data = null;
-                response.Success = false;
-                response.Message = $"Erro ao tentar atualizar o produto: {ex.Message}";
-            }
-
-            return response;
+            return await result.Content.ReadFromJsonAsync<Response<Produto>>()
+             ?? new Response<Produto>(null!, "Não Possivel atualizar produto.", 400);
         }
-
 
 
     }

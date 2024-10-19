@@ -1,8 +1,29 @@
 @page "/produtos/edit/{id:long}"
 @using CatalogoDeProdutos.Core.models
 @inject IProdutoHandler produtoHandler
+@inject ISnackbar Snackbar
 
 <h3>Atualizar Produto</h3>
+
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+    <div id="toastProdutoCriado" 
+      class="toast" role="alert" 
+      aria-live="assertive" 
+      aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Sucesso</strong>
+            <button type="button" 
+            class="btn-close"
+             data-bs-dismiss="toast" 
+             aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Produto atualizado com sucesso!
+        </div>
+    </div>
+</div>
+
+
 
 @if (produto == null)
 {
@@ -44,15 +65,15 @@ else
             <ValidationMessage For="@(() => produto.Quantidade)" />
         </div>
         <div class="mb-3">
-    <label for="tipo" class="form-label">Tipo</label>
-    <InputSelect id="tipo" class="form-control" @bind-Value="produto.Tipo">
-        @foreach (var tipo in Enum.GetValues(typeof(Tipo)).Cast<Tipo>())
-        {
-            <option value="@tipo">@tipo</option>
-        }
-    </InputSelect>
-    <ValidationMessage For="@(() => produto.Tipo)" />
-</div>
+            <label for="tipo" class="form-label">Tipo</label>
+            <InputSelect id="tipo" class="form-control" @bind-Value="produto.Tipo">
+                @foreach (var tipo in Enum.GetValues(typeof(Tipo)).Cast<Tipo>())
+                {
+                    <option value="@tipo">@tipo</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => produto.Tipo)" />
+        </div>
 
 
 
@@ -97,10 +118,9 @@ else
     private async Task AtualizarProduto()
     {
         var response = await produtoHandler.UpdateProduto(produto);
-
         if (response.Success)
         {
-            Navigation.NavigateTo("/produtos");
+            await JSRuntime.InvokeVoidAsync("showToast");
         }
         else
         {
@@ -111,6 +131,15 @@ else
     private void Voltar()
     {
         Navigation.NavigateTo("/produtos");
+    }
+
+
+    private async Task ShowSuccessToast()
+    {
+        var toastElement = await
+        JSRuntime.InvokeAsync<IJSObjectReference>
+        ("import", new object[] { "/js/bootstrap.min.js" });
+        await toastElement.InvokeVoidAsync("show");
     }
 
 }
