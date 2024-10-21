@@ -29,7 +29,3 @@ packages/
 .DS_Store
 Thumbs.db
 
-# Ignore banco de dados SQLite local
-*.db
-*.sqlite
-*.sqlite3
