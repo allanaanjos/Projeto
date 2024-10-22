@@ -3,12 +3,13 @@
 
 
 <h1>PRODUTOS</h1>
-@if(produtos == null){
-   <p>Nenhum produto cadastrado...</p>
-}
-else if (!produtos.Any())
+
+@if (produtos == null)
 {
-    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true"   />
+}
+else if(!produtos.Any()){
+    <MudText Align="Align.Left" Typo="Typo.h6">Nenhum produto foi encontrado...</MudText>
 }
 else
 {
@@ -47,18 +48,11 @@ else
         var response = await produtoService.GetProdutos(new PagedRequest { PageNumber = 1, PageSize = 10 });
 
         Console.WriteLine($"Resposta ao obter produtos: Success={response!.Success}, Message={response.Message}");
-
-        if (response != null && response.Success && response.Data != null)
-        {
-            produtos = response.Data;
-        }
-        else
-        {
-            produtos = new List<Produto>();
-        }
+         
+        produtos = response.Data!;
     }
 
-    private async Task ExcluirProduto(long produtoId)
+    public async Task ExcluirProduto(long produtoId)
     {
         bool confirmado = await JSRuntime.InvokeAsync<bool>
         ("confirme",
@@ -71,4 +65,6 @@ else
 
 
     }
+
+
 }

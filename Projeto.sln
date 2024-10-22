@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogoDeProdutos.applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogoDeProdutos.Infra", "CatalogoDeProdutos.Infra\CatalogoDeProdutos.Infra.csproj", "{F22FEA26-D7F5-42BB-B175-8BD5C81700F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogoDeProdutos.Teste", "CatalogoDeProdutos.Teste\CatalogoDeProdutos.Teste.csproj", "{0A30F42E-559E-4F31-94A8-E11E7C72CF41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{F22FEA26-D7F5-42BB-B175-8BD5C81700F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22FEA26-D7F5-42BB-B175-8BD5C81700F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22FEA26-D7F5-42BB-B175-8BD5C81700F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A30F42E-559E-4F31-94A8-E11E7C72CF41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A30F42E-559E-4F31-94A8-E11E7C72CF41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A30F42E-559E-4F31-94A8-E11E7C72CF41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A30F42E-559E-4F31-94A8-E11E7C72CF41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

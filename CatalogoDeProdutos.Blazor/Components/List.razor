@@ -1,3 +1,4 @@
+@using CatalogoDeProdutos.Blazor.Pages
 @using CatalogoDeProdutos.Core.models
 
 <tr>
@@ -20,13 +21,12 @@
 </tr>
 
 @code {
-    [Parameter] public Produto? produtos { get; set; }
+    [Parameter] public Produto? produtos { get; set;}
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     private async Task HandleClickAsync(MouseEventArgs args) => await OnClick.InvokeAsync();
 
-
     private void EditarProduto(long id)
     => Navigation.NavigateTo($"/produtos/edit/{id}");
 
-}
+} 

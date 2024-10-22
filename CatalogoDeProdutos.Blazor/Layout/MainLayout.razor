@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <MudSnackbarProvider />
+<MudThemeProvider /> 
 
 <div class="page">
     <div class="sidebar">
@@ -17,3 +18,10 @@
         </article>
     </main>
 </div>
+
+@code{
+     protected override void OnInitialized()
+    {
+        Navigation.NavigateTo("/produtos");
+    }
+}
