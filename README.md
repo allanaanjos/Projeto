@@ -24,17 +24,17 @@ O projeto é dividido em duas principais camadas:
 2. **CatalogoDeProdutos.Blazor**: Responsável pela interface do usuário e interação com a API.
 
 ## Como Executar o Projeto
-1. Navegue até o diretório da API 
+1. **Navegue até o diretório da API** 
    cd CatalogoDeProdutos.Api
 
-2. Restaure as dependências e execute o backend
+2. **Restaure as dependências e execute o backend**
    dotnet restore
    dotnet run
    
-3. Navegue até o diretório do frontend
+3. **Navegue até o diretório do frontend**
    cd ../CatalogoDeProdutos.Blazor
 
-4. Restaure as dependências e execute o frontend
+4. **Restaure as dependências e execute o frontend**
    dotnet restore
    dotnet run
    
