@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\CatalogoDeProdutos.Core\CatalogoDeProdutos.Core.csproj"/>
+    <ProjectReference Include="..\CatalogoDeProdutos.Application\CatalogoDeProdutos.application.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0"/>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

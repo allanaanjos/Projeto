@@ -1,27 +1,8 @@
 @page "/produto/criar"
-@inject IProdutoHandler produtoHandler
-@inject ISnackbar Snackbar
-
 
 <h1>Criar Produto</h1>
 
-<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
-    <div id="toastProdutoCriado" 
-      class="toast" role="alert" 
-      aria-live="assertive" 
-      aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Sucesso</strong>
-            <button type="button" 
-            class="btn-close"
-             data-bs-dismiss="toast" 
-             aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Produto criado com sucesso!
-        </div>
-    </div>
-</div>
+
 
 <EditForm Model="novoProduto" OnValidSubmit="AdicionarProduto">
     <DataAnnotationsValidator />
@@ -66,25 +47,20 @@
 
     <button type="submit" class="btn btn-primary">Adicionar Produto</button>
     <button type="button" class="btn btn-secondary" @onclick="Voltar">Voltar</button>
+
 </EditForm>
 
 @code {
     private CreateProdutoRequest novoProduto { get; set; } = new CreateProdutoRequest();
     private string errorMessage { get; set; } = string.Empty;
-
     private async Task AdicionarProduto()
     {
-        var response = await produtoHandler.CreateProduto(novoProduto);
-
-        if (response.Success)
-        {
-            await JSRuntime.InvokeVoidAsync("showToast");
-            novoProduto = new CreateProdutoRequest();
-        }
-        else
-        {
-            Console.WriteLine(response.Message);
-        }
+         await produtoService.CreateProduto(novoProduto);
+        
+         SnackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+         SnackBar.Add("Produto criado com Sucesso!", Severity.Success, configure => {
+             configure.HideIcon = true;
+         });
     }
 
     private void Voltar()
@@ -92,11 +68,4 @@
         Navigation.NavigateTo("/produtos");
     }
 
-    private async Task ShowSuccessToast()
-    {
-        var toastElement = await
-        JSRuntime.InvokeAsync<IJSObjectReference>
-        ("import", new object[] { "/js/bootstrap.min.js" });
-        await toastElement.InvokeVoidAsync("show");
-    }
 }

@@ -1,0 +1,32 @@
+@using CatalogoDeProdutos.Core.models
+
+<tr>
+    <td>@produtos!.Id</td>
+    <td>@produtos.Nome</td>
+    <td>@produtos.Preco.ToString("C")</td>
+    <td>@produtos.Descricao</td>
+    <td>@produtos.Quantidade</td>
+    <td>@produtos.Tipo</td>
+    <td>
+        <div class="d-flex">
+            <button class="btn btn-link text-primary" @onclick=@(() => EditarProduto(produtos.Id)) title="Editar">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-link text-danger" @onclick=(HandleClickAsync) title="Excluir">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+    </td>
+</tr>
+
+@code {
+    [Parameter] public Produto? produtos { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleClickAsync(MouseEventArgs args) => await OnClick.InvokeAsync();
+
+
+    private void EditarProduto(long id)
+    => Navigation.NavigateTo($"/produtos/edit/{id}");
+
+}

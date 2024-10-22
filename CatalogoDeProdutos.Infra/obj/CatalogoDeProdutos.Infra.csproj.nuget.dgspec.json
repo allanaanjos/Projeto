@@ -1,0 +1,211 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\temp\\Projeto\\CatalogoDeProdutos.Infra\\CatalogoDeProdutos.Infra.csproj": {}
+  },
+  "projects": {
+    "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\CatalogoDeProdutos.application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\CatalogoDeProdutos.application.csproj",
+        "projectName": "CatalogoDeProdutos.application",
+        "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\CatalogoDeProdutos.application.csproj",
+        "packagesPath": "C:\\Users\\luayn\\.nuget\\packages\\",
+        "outputPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\luayn\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj": {
+                "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj",
+        "projectName": "CatalogoDeProdutos.Core",
+        "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj",
+        "packagesPath": "C:\\Users\\luayn\\.nuget\\packages\\",
+        "outputPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\luayn\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\temp\\Projeto\\CatalogoDeProdutos.Infra\\CatalogoDeProdutos.Infra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\temp\\Projeto\\CatalogoDeProdutos.Infra\\CatalogoDeProdutos.Infra.csproj",
+        "projectName": "CatalogoDeProdutos.Infra",
+        "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Infra\\CatalogoDeProdutos.Infra.csproj",
+        "packagesPath": "C:\\Users\\luayn\\.nuget\\packages\\",
+        "outputPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Infra\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\luayn\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\CatalogoDeProdutos.application.csproj": {
+                "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Application\\CatalogoDeProdutos.application.csproj"
+              },
+              "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj": {
+                "projectPath": "C:\\temp\\Projeto\\CatalogoDeProdutos.Core\\CatalogoDeProdutos.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

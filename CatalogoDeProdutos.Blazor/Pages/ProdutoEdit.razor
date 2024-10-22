@@ -1,28 +1,8 @@
 @page "/produtos/edit/{id:long}"
 @using CatalogoDeProdutos.Core.models
-@inject IProdutoHandler produtoHandler
 @inject ISnackbar Snackbar
 
 <h3>Atualizar Produto</h3>
-
-<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
-    <div id="toastProdutoCriado" 
-      class="toast" role="alert" 
-      aria-live="assertive" 
-      aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Sucesso</strong>
-            <button type="button" 
-            class="btn-close"
-             data-bs-dismiss="toast" 
-             aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Produto atualizado com sucesso!
-        </div>
-    </div>
-</div>
-
 
 
 @if (produto == null)
@@ -86,27 +66,22 @@ else
     [Parameter]
     public long id { get; set; }
 
-    private UpdateProdutoRequest produto { get; set; } = new UpdateProdutoRequest();
+    public UpdateProdutoRequest produto { get; set; } = new UpdateProdutoRequest();
     private string? erroMessage { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
-        var requeste = new GetProdutoByIdRequest { Id = id };
-
-        var response = await produtoHandler.GetProdutoById(requeste);
-
-
-        if (response.Success)
+        var response = await produtoService.GetProdutoById(new GetProdutoByIdRequest { Id = id });
+        if (response.Data != null)
         {
-            var data = response.Data;
             produto = new UpdateProdutoRequest
                 {
-                    ProdutoId = data.Id,
-                    Nome = data.Nome,
-                    Preco = data.Preco,
-                    Descricao = data.Descricao,
-                    Quantidade = data.Quantidade,
-                    Tipo = data.Tipo
+                    ProdutoId = response.Data.Id,
+                    Nome = response.Data.Nome,
+                    Preco = response.Data.Preco,
+                    Descricao = response.Data.Descricao,
+                    Quantidade = response.Data.Quantidade,
+                    Tipo = response.Data.Tipo
                 };
         }
         else
@@ -117,29 +92,13 @@ else
 
     private async Task AtualizarProduto()
     {
-        var response = await produtoHandler.UpdateProduto(produto);
-        if (response.Success)
-        {
-            await JSRuntime.InvokeVoidAsync("showToast");
-        }
-        else
-        {
-            erroMessage = response.Message;
-        }
+        await produtoService.UpdateProduto(produto);
+        SnackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+        SnackBar.Add("Produto atualizado com sucesso!", Severity.Success, configure => {
+             configure.HideIcon = true;
+        });
     }
 
-    private void Voltar()
-    {
-        Navigation.NavigateTo("/produtos");
-    }
-
-
-    private async Task ShowSuccessToast()
-    {
-        var toastElement = await
-        JSRuntime.InvokeAsync<IJSObjectReference>
-        ("import", new object[] { "/js/bootstrap.min.js" });
-        await toastElement.InvokeVoidAsync("show");
-    }
+    public void Voltar() => Navigation.NavigateTo("/produtos");
 
 }

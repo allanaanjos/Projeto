@@ -1,0 +1,16 @@
+C:\temp\Projeto\CatalogoDeProdutos.Application\bin\Debug\net8.0\CatalogoDeProdutos.application.deps.json
+C:\temp\Projeto\CatalogoDeProdutos.Application\bin\Debug\net8.0\CatalogoDeProdutos.application.dll
+C:\temp\Projeto\CatalogoDeProdutos.Application\bin\Debug\net8.0\CatalogoDeProdutos.application.pdb
+C:\temp\Projeto\CatalogoDeProdutos.Application\bin\Debug\net8.0\CatalogoDeProdutos.Core.dll
+C:\temp\Projeto\CatalogoDeProdutos.Application\bin\Debug\net8.0\CatalogoDeProdutos.Core.pdb
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.csproj.AssemblyReference.cache
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.GeneratedMSBuildEditorConfig.editorconfig
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.AssemblyInfoInputs.cache
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.AssemblyInfo.cs
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.csproj.CoreCompileInputs.cache
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.sourcelink.json
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\Catalogo.72175329.Up2Date
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.dll
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\refint\CatalogoDeProdutos.application.dll
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\CatalogoDeProdutos.application.pdb
+C:\temp\Projeto\CatalogoDeProdutos.Application\obj\Debug\net8.0\ref\CatalogoDeProdutos.application.dll

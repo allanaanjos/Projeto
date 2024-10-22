@@ -1,17 +1,14 @@
 @page "/Produtos"
 @using CatalogoDeProdutos.Core.models
-@inject IProdutoHandler produtoHandler
-@inject IJSRuntime JSRuntime
+
 
 <h1>PRODUTOS</h1>
-
-@if (produtos == null)
-{
-    <p>Carregando produtos...</p>
+@if(produtos == null){
+   <p>Nenhum produto cadastrado...</p>
 }
 else if (!produtos.Any())
 {
-    <p>Nenhum produto encontrado.</p>
+    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
 }
 else
 {
@@ -30,26 +27,8 @@ else
         <tbody>
             @foreach (var produto in produtos)
             {
-                <tr>
-                    <td>@produto.Id</td>
-                    <td>@produto.Nome</td>
-                    <td>@produto.Preco.ToString("C")</td>
-                    <td>@produto.Descricao</td>
-                    <td>@produto.Quantidade</td>
-                    <td>@produto.Tipo</td>
-                    <td>
-                        <div class="d-flex">
-                            <button class="btn btn-link text-primary" @onclick=@(() => EditarProduto(produto.Id))
-                                title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="btn btn-link text-danger" @onclick=@(() => ExcluirProduto(produto.Id))
-                                title="Excluir">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <List produtos="produto" OnClick="(() => ExcluirProduto(produto.Id))"></List>
+
             }
         </tbody>
     </table>
@@ -63,24 +42,21 @@ else
         await CarregarProdutos();
     }
 
-    private async Task CarregarProdutos()
+    public async Task CarregarProdutos()
     {
-        var response = await produtoHandler.GetProdutos(new PagedRequest { PageNumber = 1, PageSize = 10 });
+        var response = await produtoService.GetProdutos(new PagedRequest { PageNumber = 1, PageSize = 10 });
 
         Console.WriteLine($"Resposta ao obter produtos: Success={response!.Success}, Message={response.Message}");
 
         if (response != null && response.Success && response.Data != null)
         {
-            produtos = response.Data; 
+            produtos = response.Data;
         }
         else
         {
-            produtos = new List<Produto>(); 
+            produtos = new List<Produto>();
         }
     }
-
-    private void EditarProduto(long id)
-    => Navigation.NavigateTo($"/produtos/edit/{id}");
 
     private async Task ExcluirProduto(long produtoId)
     {
@@ -90,17 +66,9 @@ else
         { $"Tem certeza que deseja excluir o produto {produtoId}?" });
 
 
-        var request = new DeleteProdutoRequest { id = produtoId };
-        var response = await produtoHandler.DeleteProduto(request);
+        await produtoService.ExcluirProduto(new DeleteProdutoRequest { id = produtoId });
+        await CarregarProdutos();
 
-        if (response.Success)
-        {
-            produtos.RemoveAll(p => p.Id == produtoId);
-            Console.WriteLine("Produto excluído com sucesso.");
-        }
-        else
-        {
-            Console.WriteLine(response.Message);
-        }
+
     }
 }

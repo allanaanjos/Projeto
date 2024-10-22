@@ -2,14 +2,14 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using CatalogoDeProdutos.Blazor;
 using CatalogoDeProdutos.Core.Handler;
-using CatalogoDeProdutos.Blazor.Handler;
 using MudBlazor.Services;
+using CatalogoDeProdutos.Blazor.Handler;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddTransient<IProdutoHandler, ProdutoHandler>();
+builder.Services.AddTransient<IProdutoService, ProdutoHandler>();
 
 builder.Services.AddMudServices();
 
