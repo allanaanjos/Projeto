@@ -39,7 +39,7 @@ public class ProdutoHandler : IProdutoService
 
         var response = await http.GetFromJsonAsync<ProdutoResponse>(url);
 
-        return new Response<List<Produto>>(response.Data);
+        return new Response<List<Produto>>(response!.Data!);
 
     }
 

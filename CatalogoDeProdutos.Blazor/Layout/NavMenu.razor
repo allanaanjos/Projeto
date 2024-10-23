@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Catalogo de Produtos</a>
+        <a class="navbar-brand" href="">Catálogo de Produtos</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,12 +11,14 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/produto/criar">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Novo Produto
+                <MudIcon Icon="@Icons.Material.Filled.AddCircle" />
+                Novo Produto
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/produtos">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Produtos
+                <MudIcon Icon="@Icons.Material.Filled.List" />
+                Produtos
             </NavLink>
         </div>
     </nav>

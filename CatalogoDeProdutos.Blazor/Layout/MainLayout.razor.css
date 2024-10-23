@@ -4,13 +4,12 @@
     flex-direction: column;
 }
 
+.sidebar{
+    background-color:#363e46;
+}
 
 main {
     flex: 1;
-}
-
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
 .top-row {

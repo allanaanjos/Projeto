@@ -2,6 +2,9 @@ html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+.sidebar{
+    background-color: #1b6ec2;
+}
 
 h1 {
     font-family: 'Arial', sans-serif;

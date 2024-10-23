@@ -1,3 +1,5 @@
+using CatalogoDeProdutos.Core.models;
+
 namespace CatalogoDeProdutos.Core.Response
 {
     public class Response<T>
