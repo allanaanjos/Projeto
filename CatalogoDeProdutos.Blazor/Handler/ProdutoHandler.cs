@@ -11,22 +11,24 @@ public class ProdutoHandler : IProdutoService
 {
     private readonly HttpClient http;
 
+    private string _baseUrl = "http://localhost:5064/v1/produtos";
+
     public ProdutoHandler(HttpClient http)
     {
         this.http = http;
     }
 
     public async Task CreateProduto(CreateProdutoRequest request)
-       => await http.PostAsJsonAsync("http://localhost:5064/v1/produtos/criar", request);
+       => await http.PostAsJsonAsync($"{_baseUrl}/criar", request);
 
     public async Task ExcluirProduto(DeleteProdutoRequest request)
-     => await http.DeleteAsync($"http://localhost:5064/v1/produtos/{request.id}");
+     => await http.DeleteAsync($"{_baseUrl}/{request.id}");
 
 
     public async Task<Response<Produto?>> GetProdutoById(GetProdutoByIdRequest request)
     {
         var response = await http.GetFromJsonAsync<Produto>
-        ($"http://localhost:5064/v1/produtos/{request.Id}");
+        ($"{_baseUrl}/{request.Id}");
 
         return new Response<Produto?>(response);
     }
@@ -35,7 +37,7 @@ public class ProdutoHandler : IProdutoService
     public async Task<Response<List<Produto>>?> GetProdutos(PagedRequest request)
     {
         string url =
-        $"http://localhost:5064/v1/produtos?page={request.PageNumber}&pageSize={request.PageSize}";
+        $"{_baseUrl}?page={request.PageNumber}&pageSize={request.PageSize}";
 
         var response = await http.GetFromJsonAsync<ProdutoResponse>(url);
 
@@ -44,5 +46,5 @@ public class ProdutoHandler : IProdutoService
     }
 
     public async Task UpdateProduto(UpdateProdutoRequest request)
-     => await http.PutAsJsonAsync($"http://localhost:5064/v1/produtos/{request.ProdutoId}", request);
+     => await http.PutAsJsonAsync($"{_baseUrl}/{request.ProdutoId}", request);
 }

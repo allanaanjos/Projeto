@@ -1,11 +1,12 @@
 @page "/produtos/edit/{id:long}"
 @using CatalogoDeProdutos.Core.models
 @inject ISnackbar Snackbar
+@inject IProdutoService produtoService 
 
 <h3>Atualizar Produto</h3>
 
 
-@if (produto == null)
+@if (_produto == null)
 {
     <p><em>Carregando...</em></p>
 }
@@ -18,47 +19,45 @@ else
         </div>
     }
 
-    <EditForm Model="@produto" OnValidSubmit="AtualizarProduto">
+    <EditForm Model="@_produto" OnValidSubmit="AtualizarProduto">
         <DataAnnotationsValidator />
-        <ValidationSummary />
 
         <div class="mb-3">
             <label for="Nome" class="form-label">Nome</label>
-            <InputText id="nome" class="form-control" @bind-Value="produto.Nome" />
-            <ValidationMessage For="@(() => produto.Nome)" />
+            <InputText id="nome" class="form-control" @bind-Value="_produto.Nome" />
+            <ValidationMessage For="@(() => _produto.Nome)" />
         </div>
 
         <div class="mb-3">
             <label for="preco" class="form-label">Preço</label>
-            <InputNumber id="preco" class="form-control" @bind-Value="produto.Preco" />
-            <ValidationMessage For="@(() => produto.Preco)" />
+            <InputNumber id="preco" class="form-control" @bind-Value="_produto.Preco" />
+            <ValidationMessage For="@(() => _produto.Preco)" />
         </div>
 
         <div class="mb-3">
             <label for="descricao" class="form-label">Descrição</label>
-            <InputTextArea id="descricao" class="form-control" @bind-Value="produto.Descricao" />
-            <ValidationMessage For="@(() => produto.Descricao)" />
+            <InputTextArea id="descricao" class="form-control" @bind-Value="_produto.Descricao" />
+            <ValidationMessage For="@(() => _produto.Descricao)" />
         </div>
         <div class="mb-3">
             <label for="quantidade" class="form-label">Quantidade</label>
-            <InputNumber id="quantidade" class="form-control" @bind-Value="produto.Quantidade" />
-            <ValidationMessage For="@(() => produto.Quantidade)" />
+            <InputNumber id="quantidade" class="form-control" @bind-Value="_produto.Quantidade" />
+            <ValidationMessage For="@(() => _produto.Quantidade)" />
         </div>
         <div class="mb-3">
             <label for="tipo" class="form-label">Tipo</label>
-            <InputSelect id="tipo" class="form-control" @bind-Value="produto.Tipo">
+            <InputSelect id="tipo" class="form-control" @bind-Value="_produto.Tipo">
                 @foreach (var tipo in Enum.GetValues(typeof(Tipo)).Cast<Tipo>())
                 {
                     <option value="@tipo">@tipo</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => produto.Tipo)" />
+            <ValidationMessage For="@(() => _produto.Tipo)" />
         </div>
 
 
 
         <button type="submit" class="btn btn-primary">Atualizar Produto</button>
-        <button type="button" class="btn btn-secondary" @onclick="Voltar">Voltar</button>
     </EditForm>
 }
 
@@ -66,7 +65,7 @@ else
     [Parameter]
     public long id { get; set; }
 
-    public UpdateProdutoRequest produto { get; set; } = new UpdateProdutoRequest();
+    private UpdateProdutoRequest _produto { get; set; } = new UpdateProdutoRequest();
     private string? erroMessage { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
@@ -74,7 +73,7 @@ else
         var response = await produtoService.GetProdutoById(new GetProdutoByIdRequest { Id = id });
         if (response.Data != null)
         {
-            produto = new UpdateProdutoRequest
+            _produto = new UpdateProdutoRequest
                 {
                     ProdutoId = response.Data.Id,
                     Nome = response.Data.Nome,
@@ -92,13 +91,13 @@ else
 
     private async Task AtualizarProduto()
     {
-        await produtoService.UpdateProduto(produto);
-        SnackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
-        SnackBar.Add("Produto atualizado com sucesso!", Severity.Success, configure => {
+        await produtoService.UpdateProduto(_produto);
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+        Snackbar.Add("Produto atualizado com sucesso!", Severity.Success, configure => {
              configure.HideIcon = true;
         });
-    }
 
-    public void Voltar() => Navigation.NavigateTo("/produtos");
+        Navigation.NavigateTo("/produtos");
+    }
 
 }

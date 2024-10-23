@@ -23,28 +23,29 @@ O projeto é dividido em duas principais camadas:
 1. **CatalogoDeProdutos.Api**: Responsável pela API e manipulação de dados.
 2. **CatalogoDeProdutos.Blazor**: Responsável pela interface do usuário e interação com a API.
 
-## Como Executar o Projeto
-1. **Navegue até o diretório da API**:
-   cd CatalogoDeProdutos.Api
-
-2. **Restaure as dependências e execute o backend**:
-   dotnet restore,
-   dotnet run
-   
-3. **Navegue até o diretório do frontend**:
-   cd ../CatalogoDeProdutos.Blazor
-
-4. **Restaure as dependências e execute o frontend**:
-   dotnet restore,
-   dotnet run
-   
-### Pré-requisitos
-
-- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
-
 ### Passos para Execução
 
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seu_usuario/CatalogoDeProdutos.git
    cd CatalogoDeProdutos
+
+
+2. **Navegue até o diretório da API via linha de comando** :
+
+   cd CatalogoDeProdutos.Api
+
+3. **Restaure as dependências e execute o backend**:
+   dotnet restore,
+   dotnet run
+   
+4. **Navegue até o diretório do frontend em outro terminal**:
+   cd CatalogoDeProdutos.Blazor
+
+5. **Restaure as dependências e execute o frontend**:
+   dotnet restore,
+   dotnet run
+   
+### Pré-requisitos
+
+- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)

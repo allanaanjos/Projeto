@@ -16,35 +16,28 @@ public class ProdutoService : IProdutoService
 
     public async Task CreateProduto(CreateProdutoRequest request)
     {
-        try
-        {
-            var novoProduto = new Produto(
-                request.Nome,
-                request.Preco,
-                request.Descricao,
-                request.Quantidade,
-                tipo: request.Tipo
-            );
+        var novoProduto = new Produto(
+            request.Nome,
+            request.Preco,
+            request.Descricao,
+            request.Quantidade,
+            tipo: request.Tipo
+        );
 
-            await _repository.AddAsync(novoProduto);
-            await _repository.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Erro ao criar o produto", ex);
-        }
+        await _repository.AddAsync(novoProduto);
+        await _repository.SaveChanges();
     }
 
     public async Task ExcluirProduto(DeleteProdutoRequest request)
     {
-       var produto = await _repository.GetByIdAsync(request.Id);
+        var produto = await _repository.GetByIdAsync(request.Id);
 
-       if(produto is null)
-          throw new KeyNotFoundException
-          ($"Produto com ID {request.Id} não foi encontrado.");
+        if (produto is null)
+            throw new KeyNotFoundException
+            ($"Produto com ID {request.Id} não foi encontrado.");
 
-       produto.Inativar();
-       await _repository.SaveChanges();
+        produto.Inativar();
+        await _repository.SaveChanges();
     }
 
     public async Task<Response<Produto?>> GetProdutoById(GetProdutoByIdRequest request)
@@ -65,27 +58,22 @@ public class ProdutoService : IProdutoService
 
     public async Task<Response<List<Produto>>?> GetProdutos(PagedRequest request)
     {
-        try
-        {
-            var produtos = await _repository.GetAllAsync();
 
-            return new Response<List<Produto>>(data: produtos!
-                  .Skip((request.PageNumber - 1) * request.PageSize)
-                  .Take(request.PageSize)
-                  .ToList(),
-                  message: "Produtos obtidos com sucesso.");
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
+        var produtos = await _repository.GetAllAsync();
+
+        return new Response<List<Produto>>(data: produtos!
+              .Skip((request.PageNumber - 1) * request.PageSize)
+              .Take(request.PageSize)
+              .ToList(),
+              message: "Produtos obtidos com sucesso.");
+
+
     }
 
 
-   public async Task UpdateProduto(UpdateProdutoRequest request)
-{
-    try
+    public async Task UpdateProduto(UpdateProdutoRequest request)
     {
+
         var produtoExistente = await _repository.GetByIdAsync(request.ProdutoId);
 
         if (produtoExistente == null)
@@ -102,11 +90,6 @@ public class ProdutoService : IProdutoService
 
         await _repository.SaveChanges();
     }
-    catch (Exception ex)
-    {
-        throw new Exception($"Erro ao atualizar o produto: {ex.Message}");
-    }
-}
 
 
 }

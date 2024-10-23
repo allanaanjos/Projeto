@@ -9,7 +9,7 @@ namespace CatalogoDeProdutos.Core.Request
         [MinLength(3, ErrorMessage = "O nome deve ter pelo menos 3 caracteres.")]
         public string Nome { get; set; } = string.Empty;
 
-        [Range(0, double.MaxValue, ErrorMessage = "O preço não pode ser negativo.")]
+        [Range(1, double.MaxValue, ErrorMessage = "O preço não pode ser negativo.")]
         public double Preco { get; set; }
 
         [MaxLength(500, ErrorMessage = "A descrição não pode exceder 500 caracteres.")]

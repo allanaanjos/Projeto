@@ -1,15 +1,17 @@
 @page "/Produtos"
 @using CatalogoDeProdutos.Core.models
+@inject IProdutoService produtoService 
+@inject IJSRuntime JSRuntime
 
 
 <h1>PRODUTOS</h1>
 
-@if (produtos == null)
+@if (_produtos == null)
 {
     <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true"   />
 }
-else if(!produtos.Any()){
-    <MudText Align="Align.Left" Typo="Typo.h6">Nenhum produto foi encontrado...</MudText>
+else if(!_produtos.Any()){
+    <MudText Align="Align.Left" Typo="Typo.h6">Nenhum produto foi encontrado.</MudText>
 }
 else
 {
@@ -26,7 +28,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var produto in produtos)
+            @foreach (var produto in _produtos)
             {
                 <List produtos="produto" OnClick="(() => ExcluirProduto(produto.Id))"></List>
 
@@ -36,7 +38,7 @@ else
 }
 
 @code {
-    public List<Produto> produtos { get; set; } = new List<Produto>();
+    private  List<Produto> _produtos { get; set; } = new List<Produto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,7 +51,7 @@ else
 
         Console.WriteLine($"Resposta ao obter produtos: Success={response!.Success}, Message={response.Message}");
          
-        produtos = response.Data!;
+        _produtos = response.Data!;
     }
 
     public async Task ExcluirProduto(long produtoId)
@@ -57,7 +59,7 @@ else
         bool confirmado = await JSRuntime.InvokeAsync<bool>
         ("confirme",
         new object[]
-        { $"Tem certeza que deseja excluir o produto {produtoId}?" });
+           { $"Tem certeza que deseja excluir o produto {produtoId}?" });
 
 
         await produtoService.ExcluirProduto(new DeleteProdutoRequest { id = produtoId });

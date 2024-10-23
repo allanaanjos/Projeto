@@ -1,4 +1,6 @@
 @page "/produto/criar"
+@inject IProdutoService produtoService 
+@inject ISnackbar Snackbar
 
 <h1>Criar Produto</h1>
 
@@ -6,7 +8,6 @@
 
 <EditForm Model="novoProduto" OnValidSubmit="AdicionarProduto">
     <DataAnnotationsValidator />
-    <ValidationSummary />
 
     <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
@@ -46,7 +47,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Adicionar Produto</button>
-    <button type="button" class="btn btn-secondary" @onclick="Voltar">Voltar</button>
 
 </EditForm>
 
@@ -57,15 +57,12 @@
     {
          await produtoService.CreateProduto(novoProduto);
         
-         SnackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
-         SnackBar.Add("Produto criado com Sucesso!", Severity.Success, configure => {
+         Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+         Snackbar.Add("Produto criado com Sucesso!", Severity.Success, configure => {
              configure.HideIcon = true;
          });
-    }
 
-    private void Voltar()
-    {
-        Navigation.NavigateTo("/produtos");
+         Navigation.NavigateTo("/proutos");
     }
 
 }
